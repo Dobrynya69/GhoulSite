@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}User list{% endblock title %}
+
+{% block content %}
+    <div class="centered_block">
+        <div class="message">GGGGGGGGGGGGGGGGGGGGGGGG</div>
+        <form method="POST" class="find_form">
+            {% csrf_token %}
+            {{form|crispy}}
+            <input type="submit" value="Search" class="btn btn-primary">
+        </form>
+        <div class="users">
+            {% for u in users %}
+                <div class="card text-white bg-dark mb-3">
+                    <div class="card-header">
+                        {% if u.zxc_level < 10 %}
+                                <div class="user_logo"><img src="{% static 'images/ghoul_lvl1.png' %}" alt="logo"></div>
+                        {% elif u.zxc_level < 20 %}
+                            <div class="user_logo"><img src="{% static 'images/ghoul_lvl2.png' %}" alt="logo"></div>
+                        {% elif u.zxc_level < 30 %}
+                            <div class="user_logo"><img src="{% static 'images/ghoul_lvl3.png' %}" alt="logo"></div>
+                        {% elif u.zxc_level < 40 %}
+                            <div class="user_logo"><img src="{% static 'images/ghoul_lvl4.png' %}" alt="logo"></div>
+                        {% else%}
+                            <div class="user_logo"><img src="{% static 'images/ghoul_lvl5.png' %}" alt="logo"></div>
+                        {% endif %}
+                        <b>{{u.first_name}}</b>
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">{{u.zxc_level}} level</h5>
+                      <p class="card-text">
+                        <div class="progress {{u.zxc_scores}}">
+                            <div class="black progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </p>
+                      <p class="card-text"><a href="{% url 'send_friend_invite' u.pk %}" class="btn btn-primary invite_button">Send friend invite +</a></p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>       
+    </div>
+{% endblock content %}
+
+{% block scripts %}
+    <script>
+        var bars = document.querySelectorAll(".progress")
+        for (let i = 0; i < bars.length; i++) {
+            var orig = 1000 - Number(bars[i].classList[1])
+            var score = orig / 10 
+            bars[i].innerHTML = '<div class="black progress-bar bg-danger" role="progressbar" style="width: ' + score + '%" aria-valuenow="' + score + '" aria-valuemin="0" aria-valuemax="100"><b class = "black">1000 - ' +  orig + '</b></div>'
+        }
+    </script>
+    <script src="{% static 'javaScript/user_list_ajax.js' %}"></script>
+    <style>
+        .card{
+            min-width: 300px;
+            margin: 0 10px;
+            width: calc(70vw - 40px);
+        }
+        .card-header{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+    </style>
+{% endblock scripts %}

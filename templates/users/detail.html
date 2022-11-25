@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Detail{% endblock title %}
+
+{% block content %}
+    <div class="centered_block">
+        <div class="card bg-danger" style="width:320px">
+            <div class="card-body">
+                <h4 class="card-title">Email</h4>
+                <p class="card-text">{{user.email}}</p>
+                <h4 class="card-title">Name</h4>
+                <p class="card-text">{{user.first_name}}</p>
+                <h4 class="card-title">Level</h4>
+                <p class="card-text">{{user.zxc_level}}</p>
+                <h4 class="card-title">Scores</h4>
+                <p class="card-text">{{user.zxc_scores}}</p>
+                <h4 class="card-title">Edit name</h4>
+                <p class="card-text">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{form|crispy}}
+                        <input type="submit" value="Edit" class="btn btn-dunger">
+                    </form>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

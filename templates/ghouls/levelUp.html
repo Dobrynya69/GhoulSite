@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Level Up{% endblock title %}
+
+{% block content %}
+    <div class="centered_block">
+        <button id="levelUp">Level UP</button>
+        <img src="{% static 'images/level-up.gif' %}" class="levelUp_gif">
+    </div>
+{% endblock content %}
+
+{% block scripts %}
+    <script>
+        var audio = new Audio("{% static 'audio/ghoul.mp3' %}")
+        var url = "{% url 'levelUp_user' user.pk %}"
+    </script> 
+    <script src="{% static 'javaScript/levelUp.js' %}"></script>
+{% endblock scripts %}

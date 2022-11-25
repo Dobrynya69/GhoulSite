@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Grind{% endblock title %}
+
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/grind.css' %}">
+    <style>
+        .person{
+            background-position: center;
+            background-size: cover;
+            background-image: url({% static 'images/person_ball.png' %});        
+        }
+        .ghoul{
+            background-position: center;
+            background-size: cover;
+            background-image: url({% static 'images/ghoul_ball.png' %});        
+        }
+    </style>
+{% endblock links %}
+
+{% block content %}
+    <b id="counter">Eat a man!<br/>Or ghoul?<br/>Scores: 0<br/>Streak: 0</b>
+    <a href="{% url 'grind_exit' user.pk token 0 %}" id="exit"><img src="{% static 'images/close.png' %}"></a>
+{% endblock content %}
+
+{% block scripts %}
+    <script>
+        var token = "{{token}}"
+        var pk = "{{pk}}"
+        var need_scores = {{scores}}
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+    <script src="{% static 'javaScript/grind.js' %}"></script>
+{% endblock scripts %}
